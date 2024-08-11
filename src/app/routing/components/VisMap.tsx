@@ -53,9 +53,8 @@ function Directions() {
     if (!directionsService || !directionsRenderer) return;
     directionsService
       .route({
-        origin: settings.routeOptions.origin || "100 Front St, Toronto ON",
-        destination:
-          settings.routeOptions.destination || "500 College St, Toronto ON",
+        origin: settings.routeOptions.origin,
+        destination: settings.routeOptions.destination,
         travelMode:
           (settings.routeOptions.travelMode as google.maps.TravelMode) ||
           google.maps.TravelMode.DRIVING,

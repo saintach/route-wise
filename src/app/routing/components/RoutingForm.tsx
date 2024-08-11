@@ -16,13 +16,15 @@ import useSettingStore from "@/lib/useSettingStore";
 import useRoutesStore from "@/lib/useRoutesStore";
 
 export default function RoutingForm() {
-  const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
-  const [travelMode, setTravelMode] = useState("DRIVING");
-
   const { settings, setRouteOptions } = useSettingStore();
   const { routes, setRouteIndex, routeIndex } = useRoutesStore();
-
+  const [origin, setOrigin] = useState(settings.routeOptions.origin);
+  const [destination, setDestination] = useState(
+    settings.routeOptions.destination
+  );
+  const [travelMode, setTravelMode] = useState(
+    settings.routeOptions.travelMode
+  );
   const findRoutes = () => {
     setRouteOptions({
       origin,
@@ -44,6 +46,7 @@ export default function RoutingForm() {
           id="origin"
           type="text"
           placeholder="Origin"
+          value={origin}
           onChange={(event) => setOrigin(event.target.value)}
         />
       </div>
@@ -54,6 +57,7 @@ export default function RoutingForm() {
           id="destination"
           type="text"
           placeholder="Destination"
+          value={destination}
           onChange={(event) => setDestination(event.target.value)}
         />
       </div>
@@ -62,6 +66,7 @@ export default function RoutingForm() {
         <Label htmlFor="travel_mode">Travel Mode</Label>
         <RadioGroup
           defaultValue="DRIVING"
+          value={travelMode}
           onValueChange={(event) => setTravelMode(event)}
         >
           <div className="flex items-center space-x-2">

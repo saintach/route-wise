@@ -17,8 +17,8 @@ type RouteSettings = {
 const useSettingStore = create<RouteSettings>((set, get) => ({
   settings: {
     routeOptions: {
-      origin: "",
-      destination: "",
+      origin: "100 Front St, Toronto ON",
+      destination: "500 College St, Toronto ON",
       travelMode: "DRIVING",
     },
   },
