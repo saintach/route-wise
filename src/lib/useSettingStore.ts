@@ -6,6 +6,7 @@ type RouteSettings = {
       origin: string;
       destination: string;
       travelMode: string;
+      vehicleType?: string;
     };
   };
   setRouteOptions: (
@@ -17,9 +18,11 @@ type RouteSettings = {
 const useSettingStore = create<RouteSettings>((set, get) => ({
   settings: {
     routeOptions: {
-      origin: "100 Front St, Toronto ON",
-      destination: "500 College St, Toronto ON",
+      origin: "Manhattan Beach, California 90266, USA",
+      destination:
+        "Griffith Observatory, 2800 E Observatory Rd, Los Angeles, CA 90027",
       travelMode: "DRIVING",
+      vehicleType: "gasoline",
     },
   },
   setRouteOptions: (routeOptions) =>
