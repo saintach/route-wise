@@ -2,13 +2,22 @@ import { create } from "zustand";
 
 type RouteSettings = {
   settings: {
+    user: {
+      username: string;
+      password: string;
+      isLoggedIn: boolean;
+      vehicleType?: string;
+    };
     routeOptions: {
       origin: string;
       destination: string;
       travelMode: string;
-      vehicleType?: string;
     };
   };
+  setUserVehicleType: (vehicleType: string) => void;
+  setLogin: (isLoggedIn: boolean) => void;
+  setLogout: () => void;
+  setUser: (user: RouteSettings["settings"]["user"]) => void;
   setRouteOptions: (
     routeOptions: RouteSettings["settings"]["routeOptions"]
   ) => void;
@@ -17,14 +26,41 @@ type RouteSettings = {
 
 const useSettingStore = create<RouteSettings>((set, get) => ({
   settings: {
-    routeOptions: {
-      origin: "Manhattan Beach, California 90266, USA",
-      destination:
-        "Griffith Observatory, 2800 E Observatory Rd, Los Angeles, CA 90027",
-      travelMode: "DRIVING",
+    user: {
+      username: "",
+      password: "",
+      isLoggedIn: false,
       vehicleType: "gasoline",
     },
+    routeOptions: {
+      origin: "Long Beach",
+      destination: "Griffith Observatory",
+      travelMode: "DRIVING",
+    },
   },
+  setUserVehicleType: (vehicleType) =>
+    set((state) => ({
+      settings: {
+        ...state.settings,
+        user: { ...state.settings.user, vehicleType },
+      },
+    })),
+  setLogin: (isLoggedIn) =>
+    set((state) => ({
+      settings: {
+        ...state.settings,
+        user: { ...state.settings.user, isLoggedIn },
+      },
+    })),
+  setLogout: () =>
+    set((state) => ({
+      settings: {
+        ...state.settings,
+        user: { ...state.settings.user, isLoggedIn: false },
+      },
+    })),
+  setUser: (user) =>
+    set((state) => ({ settings: { ...state.settings, user } })),
   setRouteOptions: (routeOptions) =>
     set((state) => ({ settings: { ...state.settings, routeOptions } })),
   getRouteOptions: () => get().settings.routeOptions,

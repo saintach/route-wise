@@ -7,9 +7,7 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center w-full p-8 text-center bg-gray-100 rounded-lg">
           <h1 className="text-4xl font-bold">Welcome to Route Wise</h1>
           <p className="mt-4 text-lg">Please login to access your account.</p>
-          <div className="mt-6">
-            <AuthButton />
-          </div>
+          <div className="mt-6">{/* <AuthButton /> */}</div>
         </div>
       </div>
     </main>

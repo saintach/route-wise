@@ -6,10 +6,10 @@ import VisMap from "./components/VisMap";
 export default function Routing() {
   return (
     <div className="flex flex-row">
-      <div className="basis-1/4">
+      <div className="basis-2/5">
         <RoutingForm />
       </div>
-      <div className="basis-3/4">
+      <div className="basis-3/5">
         <VisMap />
       </div>
     </div>

@@ -31,9 +31,10 @@ const VisMap = () => (
 function Directions() {
   const map = useMap();
   const { settings } = useSettingStore();
+  const { user } = settings;
   const { routes, setRoutes, routeIndex, setRouteIndex } = useRoutesStore();
   const { steps, setSteps, addStep, getStep } = useStepsStore();
-  const { emissions, addEmission } = useEmissionsStore();
+  const { addEmission } = useEmissionsStore();
 
   const routesLibrary = useMapsLibrary("routes");
   const elevationLibrary = useMapsLibrary("elevation");
@@ -70,8 +71,9 @@ function Directions() {
       .then((response) => {
         directionsRenderer.setDirections(response);
         setRoutes(response.routes);
+        setSteps([]);
       });
-    return () => directionsRenderer.setMap(null);
+    return () => directionsRenderer.setMap(map);
   }, [
     directionsService,
     directionsRenderer,
@@ -79,7 +81,15 @@ function Directions() {
     settings.routeOptions.destination,
     settings.routeOptions.travelMode,
     setRoutes,
+    map,
+    setSteps,
   ]);
+
+  // Add traffic layer to the map
+  // useEffect(() => {
+  //   const trafficLayer = new google.maps.TrafficLayer();
+  //   trafficLayer.setMap(map);
+  // }, [map]);
 
   // Update direction route
   useEffect(() => {
@@ -150,6 +160,7 @@ function Directions() {
           body: JSON.stringify(data),
         });
         const responseJSON = await response.json();
+        console.log("RouteE request data: ", data);
         console.log("RouteE response: ", responseJSON);
         addEmission(responseJSON, routeId);
       } catch (error) {
@@ -164,16 +175,14 @@ function Directions() {
       let steps = stepsGroupedByRoute[key];
       const routeEData = processStepsToRouteEData(
         steps,
-        settings?.routeOptions?.vehicleType || "gasoline",
+        user?.vehicleType || "gasoline",
         "metrics"
       );
       fetchRouteEAPI(routeEData, key);
     });
-  }, [addEmission, routes, settings?.routeOptions?.vehicleType, steps]);
+  }, [addEmission, routes, user?.vehicleType, steps]);
 
   if (!leg) return null;
-
-  console.log(emissions);
 
   return <></>;
 }
